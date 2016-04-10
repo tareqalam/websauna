@@ -29,8 +29,9 @@ To create a database on Homewbrew / OSX use ``createdb`` PostgreSQL command::
 Creating database on Ubuntu
 ---------------------------
 
-To create database in postgresql 
-sudo -u postgres createdb myapp_dev
+To create a database on Ubuntu use ``createdb`` PostgreSQL command like this::
+
+    sudo -u postgres createdb myapp_dev
 
 Changing database name or authentication details
 ================================================
