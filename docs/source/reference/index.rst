@@ -10,6 +10,7 @@ References
     commands
     playbook
     troubleshooting
+    cheatsheet
     glossary
 
 
