@@ -183,3 +183,56 @@ Install these in your virtualenv::
     * then to run the test::
 
         py.test websauna/egifter/tests --ini test.ini
+
+
+=======================
+HOW TO ADD CELERY TASKS
+=======================
+
+# Create `tasks.py` in your addon (for example in websauana.addonname)
+----------------------------------------------------------------------
+Add the following code as a startup::
+
+    """Timed tasks."""
+    import logging
+    from websauna.system.task.celery import celery_app as celery
+    from websauna.system.task import TransactionalTask
+
+    logger = logging.getLogger(__name__)
+
+
+    @celery.task(name="your_task_method_name", base=TransactionalTask)
+    def your_task_method_name(request):
+        logger.info("something ..")
+        logger.info("TODO: Need to implement the actual task here")
+        logger.info("something..Done")
+
+# Add in your ini for example in `demo.ini`
+-------------------------------------------
+please notice I have added websauna.addonname.tasks::
+
+    [celery]
+    CELERY_ALWAYS_EAGER = true
+    CELERY_IMPORTS =
+        websauna.system.devop.tasks
+        websauna.addonname.tasks
+
+
+    [celerybeat:your_task_method_name]
+    task = your_task_method_name
+    type = timedelta
+    schedule = {"seconds": 10}
+
+
+# To run the task
+-----------------
+
+command::
+
+    ws-celery beat -A websauna.system.task.celery.celery_app --ini demo.ini
+
+
+# Then you need to add in ansible so it gets deoloyed in server
+---------------------------------------------------------------
+
+Documentation here `<http://websauna.org/docs/narrative/misc/task.html#configuring-celery-to-start-with-supervisor>`_
