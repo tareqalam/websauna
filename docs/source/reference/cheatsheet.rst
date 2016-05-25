@@ -1,6 +1,16 @@
 ********************
 WEBSAUANA CHEATSHEET
 ********************
+==========================================
+Database re-structure with blank database
+========================================== 
+
+* first delete database
+* run these commands::
+
+ws-alembic -c conf/development.ini -x packages=all upgrade head
+ws-alembic -c conf/development.ini revision --autogenerate
+
 
 ===============
 Model creation
